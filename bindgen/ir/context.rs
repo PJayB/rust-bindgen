@@ -2028,10 +2028,13 @@ If you encounter an error missing from this list, please file an issue or a PR!"
                     CXType_Double => FloatKind::Double,
                     CXType_LongDouble => FloatKind::LongDouble,
                     CXType_Float128 => FloatKind::Float128,
-                    _ => panic!(
-                        "Non floating-type complex? {:?}, {:?}",
-                        ty, float_type,
-                    ),
+                    _ => {
+                        warn!(
+                            "Non floating-type complex? {:?}, {:?}",
+                            ty, float_type,
+                        );
+                        return None;
+                    },
                 };
                 TypeKind::Complex(float_kind)
             }
